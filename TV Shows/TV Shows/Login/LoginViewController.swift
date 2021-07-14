@@ -9,45 +9,29 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    var counter = 0
+    private var counter = 0
 
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var button: UIButton!
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var button: UIButton!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //adding round corners to button
-        button.layer.cornerRadius = 25.0
-        
-        //second case for activity indicator
-        //activityIndicator.startAnimating()
-        
     
+        // adding round corners to button
+        button.layer.cornerRadius = 25.0
     }
-    @IBAction func buttonActionHandler(_ sender: Any) {
+    
+    @IBAction private func buttonActionHandler(_ sender: Any) {
         print("Button pressed")
-        
         counter += 1
-        self.titleLabel.text = String(counter)
-        
-        //first case
+        titleLabel.text = String(counter)
         if activityIndicator.isAnimating {
             
             activityIndicator.stopAnimating()
-        }else{
+        } else {
             activityIndicator.startAnimating()
         
         }
-        
-       
-        
-    
-        
-    
-    
-}
+    }
 }
