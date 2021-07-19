@@ -63,20 +63,39 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Register"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZX-TL-bkt">
+                                <rect key="frame" x="24" y="441" width="18.5" height="22"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="checkmark" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="CheckBoxButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="K6K-h4-5fI"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiw-a2-J7f">
+                                <rect key="frame" x="48.5" y="440.5" width="111.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="PurpleApp"/>
                         <constraints>
                             <constraint firstItem="xQw-Vo-cpT" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="1D8-Jc-eqG"/>
                             <constraint firstItem="5O2-gk-x0h" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="4iL-uw-EYM"/>
+                            <constraint firstItem="OZX-TL-bkt" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="24" id="8Go-0I-QMb"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="z5O-4y-qWF" secondAttribute="trailing" constant="20" id="966-uP-hsy"/>
                             <constraint firstItem="uV8-cq-wPD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="9K4-3a-3ML"/>
                             <constraint firstItem="gA7-iz-Ccq" firstAttribute="top" secondItem="tu4-sC-OLZ" secondAttribute="bottom" constant="20" id="9Xp-hs-lBr"/>
+                            <constraint firstItem="OZX-TL-bkt" firstAttribute="top" secondItem="z5O-4y-qWF" secondAttribute="bottom" constant="18.5" id="Aa2-Ca-bBy"/>
+                            <constraint firstItem="aiw-a2-J7f" firstAttribute="leading" secondItem="OZX-TL-bkt" secondAttribute="trailing" constant="6" id="Dex-28-UfL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="wDC-Xv-m6Y" secondAttribute="trailing" constant="20" id="DjX-ze-uER"/>
                             <constraint firstItem="z5O-4y-qWF" firstAttribute="top" secondItem="wDC-Xv-m6Y" secondAttribute="bottom" constant="10.5" id="HZY-iE-syM"/>
                             <constraint firstItem="xQw-Vo-cpT" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="JdM-KD-nTm"/>
                             <constraint firstItem="uV8-cq-wPD" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="188" id="Ty2-fR-JMV"/>
                             <constraint firstItem="W3g-CT-9Pb" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="114" id="UX7-oI-pux"/>
+                            <constraint firstItem="aiw-a2-J7f" firstAttribute="top" secondItem="z5O-4y-qWF" secondAttribute="bottom" constant="18" id="WTh-eg-T5q"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="gA7-iz-Ccq" secondAttribute="trailing" constant="20" id="Yn8-zd-o88"/>
                             <constraint firstItem="gA7-iz-Ccq" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="Yx4-oI-V6G"/>
                             <constraint firstItem="5O2-gk-x0h" firstAttribute="top" secondItem="uV8-cq-wPD" secondAttribute="bottom" constant="20" id="d4F-uA-9Hx"/>
@@ -93,6 +112,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="CheckBoxButton" destination="OZX-TL-bkt" id="GJt-sz-UNo"/>
                         <outlet property="LoginButton" destination="tu4-sC-OLZ" id="Bhg-Hw-NR2"/>
                         <outlet property="RegisterButton" destination="gA7-iz-Ccq" id="bsk-6r-Rpq"/>
                     </connections>
@@ -103,6 +123,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="logo-white" width="162" height="38"/>
         <image name="splash-top-left" width="140" height="100"/>
         <image name="splash-top-right" width="202" height="266"/>

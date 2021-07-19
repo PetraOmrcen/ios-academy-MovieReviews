@@ -11,6 +11,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet private weak var LoginButton: UIButton!
     @IBOutlet private weak var RegisterButton: UIButton!
+    @IBOutlet private weak var CheckBoxButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,10 @@ class LoginViewController: UIViewController {
         
     }
     
-   
+    @IBAction private func CheckBoxButtonAction(_ sender: Any) {
+        
+        
+    }
+    
     
 }
