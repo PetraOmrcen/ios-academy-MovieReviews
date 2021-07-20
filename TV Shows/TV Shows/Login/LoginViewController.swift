@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
 
 class LoginViewController: UIViewController {
     
@@ -15,17 +17,13 @@ class LoginViewController: UIViewController {
     @IBOutlet private weak var EmailTextField: UITextField!
     @IBOutlet private weak var PasswordTextField: UITextField!
     
-    
     private var state = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         LoginButton.layer.cornerRadius = 15.0
-        EmailTextField.attributedPlaceholder = NSAttributedString(string:"username",
-                                                                     attributes:[NSAttributedString.Key.foregroundColor: UIColor.white])
-        PasswordTextField.attributedPlaceholder = NSAttributedString(string:"password",
-                                                                     attributes:[NSAttributedString.Key.foregroundColor: UIColor.white])
+        
     }
     
     
@@ -40,4 +38,97 @@ class LoginViewController: UIViewController {
         }
     
     }
+    
+    @IBAction func LoginButtonAction(_ sender: Any) {
+           let storyboard = UIStoryboard(name: "Home", bundle: nil)
+           let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+           navigationController?.pushViewController(viewControllerHome, animated: true)
+    }
+    
+    
+    @IBAction func RegisterButtonAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+        navigationController?.pushViewController(viewControllerHome, animated: true)
+    }
+    
+    
+}
+
+private extension LoginViewController {
+
+    func alamofireCodableRegisterUserWith(email: String, password: String) {
+        SVProgressHUD.show()
+
+        let parameters: [String: String] = [
+            "email": email,
+            "password": password,
+            "password_confirmation": password
+        ]
+
+        AF
+            .request(
+                "https://tv-shows.infinum.academy/users",
+                method: .post,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default
+            )
+            .validate()
+            .responseDecodable(of: UserResponse.self) { [weak self] dataResponse in
+                switch dataResponse.result {
+                case .success(let user):
+                    self?._infoLabel.text = "Success: \(user)"
+                    SVProgressHUD.showSuccess(withStatus: "Success")
+                case .failure(let error):
+                    self?._infoLabel.text = "API/Serialization failure: \(error)"
+                    SVProgressHUD.showError(withStatus: "Failure")
+                }
+            }
+    }
+
+}
+
+// MARK: - Login + automatic JSON parsing
+
+private extension LoginViewController {
+
+    func loginUserWith(email: String, password: String) {
+        SVProgressHUD.show()
+
+        let parameters: [String: String] = [
+            "email": email,
+            "password": password
+        ]
+
+        AF
+            .request(
+                "https://tv-shows.infinum.academy/users/sign_in",
+                method: .post,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default
+            )
+            .validate()
+            .responseDecodable(of: UserResponse.self) { [weak self] dataResponse in
+                switch dataResponse.result {
+                case .success(let userResponse):
+                    let headers = dataResponse.response?.headers.dictionary ?? [:]
+                    self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
+                case .failure(let error):
+                    self?._infoLabel.text = "API/Serialization failure: \(error)"
+                    SVProgressHUD.showError(withStatus: "Failure")
+                }
+            }
+    }
+
+    // Headers will be used for subsequent authorization on next requests
+    func handleSuccesfulLogin(for user: User, headers: [String: String]) {
+        guard let authInfo = try? AuthInfo(headers: headers) else {
+            _infoLabel.text = "Missing headers"
+            SVProgressHUD.showError(withStatus: "Missing headers")
+            return
+        }
+        _infoLabel.text = "User: \(user), authInfo: \(authInfo)"
+        SVProgressHUD.showSuccess(withStatus: "Success")
+    }
+
 }

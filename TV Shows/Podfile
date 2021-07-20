@@ -7,7 +7,6 @@ target 'TV Shows' do
 
   # Pods for TV Shows
   pod "SVProgressHUD"
-  #pod "HideShowPasswordTextField", :git => 'https://github.com/Guidebook/HideShowPasswordTextField'
-  
+  pod "Alamofire"
 end
 
