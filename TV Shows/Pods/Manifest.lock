@@ -1,28 +1,16 @@
 PODS:
-  - HideShowPasswordTextField (0.3)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
-  - HideShowPasswordTextField (from `https://github.com/Guidebook/HideShowPasswordTextField`)
   - SVProgressHUD
 
 SPEC REPOS:
   trunk:
     - SVProgressHUD
 
-EXTERNAL SOURCES:
-  HideShowPasswordTextField:
-    :git: https://github.com/Guidebook/HideShowPasswordTextField
-
-CHECKOUT OPTIONS:
-  HideShowPasswordTextField:
-    :commit: d85212236651d141ba387b65edcff9940ab894f3
-    :git: https://github.com/Guidebook/HideShowPasswordTextField
-
 SPEC CHECKSUMS:
-  HideShowPasswordTextField: 9426177a6b6498a6084e29ad65bba7d1157951b7
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 035930182d3ba5b8e76fbcf8527108bec2d4a9e3
+PODFILE CHECKSUM: 3d655a317b2d2baa9ddf761e9a944934eb581474
 
 COCOAPODS: 1.10.1
