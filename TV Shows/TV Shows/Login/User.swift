@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User1: Decodable {
+struct User: Decodable {
     let id: String
     let email: String
     let imageUrl: String?
@@ -20,8 +20,8 @@ struct User1: Decodable {
     }
 }
 
-struct UserResponse1: Decodable {
-    let user: User1
+struct UserResponse: Decodable {
+    let user: User
 }
 
 struct AuthInfo: Codable {

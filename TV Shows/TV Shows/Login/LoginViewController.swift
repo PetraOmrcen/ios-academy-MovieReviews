@@ -17,16 +17,21 @@ class LoginViewController: UIViewController {
     @IBOutlet private weak var EmailTextField: UITextField!
     @IBOutlet private weak var PasswordTextField: UITextField!
     
+    
+    private var userResponse: UserResponse?
+    private var authInfo: AuthInfo?
     private var JSONdata: [String: Any] = [:]
     private var AutfInfo: [String: Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         LoginButton.layer.cornerRadius = 15.0
-        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
 }
 
 // MARK: Register
@@ -63,7 +68,7 @@ private extension LoginViewController {
                 encoder: JSONParameterEncoder.default
             )
             .validate()
-            .responseDecodable(of: UserResponse1.self) { [weak self] response in
+            .responseDecodable(of: UserResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let userResponse):
                     print(userResponse.user.email)
@@ -72,16 +77,16 @@ private extension LoginViewController {
                     let headers = response.response?.headers.dictionary ?? [:]
                     self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
                     SVProgressHUD.dismiss()
+                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                    let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+                    self?.navigationController?.pushViewController(viewControllerHome, animated: true)
                 case .failure(let error):
                     print("Error")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
             }
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
-        navigationController?.pushViewController(viewControllerHome, animated: true)
+        
     }
-
 }
 
 // MARK: Login
@@ -116,13 +121,13 @@ private extension LoginViewController {
             )
             
             .validate()
-            .responseDecodable(of: UserResponse1.self) { [weak self] response in
+            .responseDecodable(of: UserResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let userResponse):
                     print(userResponse.user.email)
                     print(userResponse.user.id)
                     print(userResponse.user.imageUrl)
-                    
+                    self?.userResponse = userResponse
                     self?.JSONdata["Email"] = userResponse.user.email
                     self?.JSONdata["Id"] = userResponse.user.id
                     self?.JSONdata["ImageUrl"] = userResponse.user.imageUrl
@@ -141,14 +146,13 @@ private extension LoginViewController {
     }
     
 
-    func handleSuccesfulLogin(for user: User1, headers: [String: String]) {
+    func handleSuccesfulLogin(for user: User, headers: [String: String]) {
         guard let authInfo = try? AuthInfo(headers: headers) else {
             SVProgressHUD.showError(withStatus: "Missing headers")
             return
         }
-        AutfInfo["User"] = user
-        AutfInfo["authInfo"] = authInfo
-        print(AutfInfo["User"], AutfInfo["authInfo"])
+        self.authInfo = authInfo
+       
     }
 
 }
