@@ -9,7 +9,6 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    
     // MARK: - Outlets
 
     @IBOutlet private weak var loginButton: UIButton!
@@ -38,7 +37,7 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     
     @available(iOS 13.0, *)
-    @IBAction func CheckBoxButtonAction(_ sender: Any) {
+    @IBAction func checkBoxButtonAction(_ sender: Any) {
         if checkBoxButton.image(for: .normal) ==  UIImage(named: "ic-checkbox-selected"){
             checkBoxButton.setImage(UIImage(named: "ic-checkbox-unselected"), for: .normal)
         }else{
