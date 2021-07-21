@@ -17,7 +17,8 @@ class LoginViewController: UIViewController {
     @IBOutlet private weak var EmailTextField: UITextField!
     @IBOutlet private weak var PasswordTextField: UITextField!
     
-    private var state = 0
+    private var JSONdata: [String: Any] = [:]
+    private var AutfInfo: [String: Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,46 +27,34 @@ class LoginViewController: UIViewController {
         
     }
     
-    
-    @available(iOS 13.0, *)
-    @IBAction func CheckBoxButtonAction(_ sender: Any) {
-        if state == 0 {
-            //CheckBoxButton.setBackgroundImage(, for: .normal)
-            state = 1
-        } else{
-            //CheckBoxButton.setBackgroundImage(, for: .normal)
-            state = 0
-        }
-    
-    }
-    
-    @IBAction func LoginButtonAction(_ sender: Any) {
-           let storyboard = UIStoryboard(name: "Home", bundle: nil)
-           let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
-           navigationController?.pushViewController(viewControllerHome, animated: true)
-    }
-    
-    
-    @IBAction func RegisterButtonAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
-        navigationController?.pushViewController(viewControllerHome, animated: true)
-    }
-    
-    
 }
 
+// MARK: Register
 private extension LoginViewController {
 
-    func alamofireCodableRegisterUserWith(email: String, password: String) {
+    @IBAction func RegisterButtonAction(_ sender: Any) {
+    // func alamofireCodableRegisterUserWith(email: String, password: String) {
         SVProgressHUD.show()
 
+        // check if strings exist
+        if (EmailTextField.text?.isEmpty) == nil{
+            EmailTextField.text = "Nothing writen"
+        }
+        if (PasswordTextField.text?.isEmpty) == nil{
+            PasswordTextField.text = "Nothing writen"
+        }
+        // bez ovog ne radi....
+        let email_text: String = EmailTextField.text!
+        let password_text: String = PasswordTextField.text!
+        
+        // setting parameters
         let parameters: [String: String] = [
-            "email": email,
-            "password": password,
-            "password_confirmation": password
+            "email": email_text,
+            "password": password_text,
+            "password_confirmation": password_text
         ]
 
+        // Api request
         AF
             .request(
                 "https://tv-shows.infinum.academy/users",
@@ -74,30 +63,48 @@ private extension LoginViewController {
                 encoder: JSONParameterEncoder.default
             )
             .validate()
-            .responseDecodable(of: UserResponse.self) { [weak self] dataResponse in
-                switch dataResponse.result {
-                case .success(let user):
-                    self?._infoLabel.text = "Success: \(user)"
-                    SVProgressHUD.showSuccess(withStatus: "Success")
+            .responseDecodable(of: UserResponse1.self) { [weak self] response in
+                switch response.result {
+                case .success(let userResponse):
+                    print(userResponse.user.email)
+                    print(userResponse.user.id)
+                    print(userResponse.user.imageUrl)
+                    let headers = response.response?.headers.dictionary ?? [:]
+                    self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
+                    SVProgressHUD.dismiss()
                 case .failure(let error):
-                    self?._infoLabel.text = "API/Serialization failure: \(error)"
+                    print("Error")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
             }
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+        navigationController?.pushViewController(viewControllerHome, animated: true)
     }
 
 }
 
-// MARK: - Login + automatic JSON parsing
+// MARK: Login
 
 private extension LoginViewController {
 
-    func loginUserWith(email: String, password: String) {
+    @IBAction func LoginButtonAction(_ sender: Any) {
         SVProgressHUD.show()
+        
+        // check if strings exist
+        if (EmailTextField.text?.isEmpty) == nil{
+            EmailTextField.text = "Nothing writen"
+        }
+        if (PasswordTextField.text?.isEmpty) == nil{
+            PasswordTextField.text = "Nothing writen"
+        }
+        // bez ovog ne radi....
+        let email_text: String = EmailTextField.text!
+        let password_text: String = PasswordTextField.text!
 
         let parameters: [String: String] = [
-            "email": email,
-            "password": password
+            "email": email_text,
+            "password": password_text
         ]
 
         AF
@@ -107,28 +114,41 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoder: JSONParameterEncoder.default
             )
+            
             .validate()
-            .responseDecodable(of: UserResponse.self) { [weak self] dataResponse in
-                switch dataResponse.result {
+            .responseDecodable(of: UserResponse1.self) { [weak self] response in
+                switch response.result {
                 case .success(let userResponse):
-                    let headers = dataResponse.response?.headers.dictionary ?? [:]
+                    print(userResponse.user.email)
+                    print(userResponse.user.id)
+                    print(userResponse.user.imageUrl)
+                    
+                    self?.JSONdata["Email"] = userResponse.user.email
+                    self?.JSONdata["Id"] = userResponse.user.id
+                    self?.JSONdata["ImageUrl"] = userResponse.user.imageUrl
+
+                    let headers = response.response?.headers.dictionary ?? [:]
                     self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
+                    SVProgressHUD.dismiss()
                 case .failure(let error):
-                    self?._infoLabel.text = "API/Serialization failure: \(error)"
+                    print("Error")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
             }
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+        navigationController?.pushViewController(viewControllerHome, animated: true)
     }
+    
 
-    // Headers will be used for subsequent authorization on next requests
-    func handleSuccesfulLogin(for user: User, headers: [String: String]) {
+    func handleSuccesfulLogin(for user: User1, headers: [String: String]) {
         guard let authInfo = try? AuthInfo(headers: headers) else {
-            _infoLabel.text = "Missing headers"
             SVProgressHUD.showError(withStatus: "Missing headers")
             return
         }
-        _infoLabel.text = "User: \(user), authInfo: \(authInfo)"
-        SVProgressHUD.showSuccess(withStatus: "Success")
+        AutfInfo["User"] = user
+        AutfInfo["authInfo"] = authInfo
+        print(AutfInfo["User"], AutfInfo["authInfo"])
     }
 
 }

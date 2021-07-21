@@ -7,20 +7,21 @@
 
 import Foundation
 
-struct UserResponse: Codable {
-    let user: User
+struct User1: Decodable {
+    let id: String
+    let email: String
+    let imageUrl: String?
+    
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case email
+        case imageUrl = "image_url"
+    }
 }
 
-struct User: Codable {
-let email: String
-let imageUrl: String?
-let id: String
-
-enum CodingKeys: String, CodingKey {
-    case email
-    case imageUrl = "image_url"
-    case id
-}
+struct UserResponse1: Decodable {
+    let user: User1
 }
 
 struct AuthInfo: Codable {
@@ -38,7 +39,7 @@ struct AuthInfo: Codable {
         case expiry = "expiry"
         case uid = "uid"
     }
-    
+
     init(headers: [String: String]) throws {
         let data = try JSONSerialization.data(withJSONObject: headers, options: .prettyPrinted)
         let decoder = JSONDecoder()
@@ -54,5 +55,5 @@ struct AuthInfo: Codable {
             return [:]
         }
     }
-    
+
 }
