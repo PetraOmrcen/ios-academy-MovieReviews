@@ -11,21 +11,24 @@ import Alamofire
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet private weak var LoginButton: UIButton!
-    @IBOutlet private weak var RegisterButton: UIButton!
-    @IBOutlet private weak var CheckBoxButton: UIButton!
-    @IBOutlet private weak var EmailTextField: UITextField!
-    @IBOutlet private weak var PasswordTextField: UITextField!
+    // MARK: - Outlets
     
+    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var registerButton: UIButton!
+    @IBOutlet private weak var checkBoxButton: UIButton!
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    
+    // MARK: - Properties
     
     private var userResponse: UserResponse?
     private var authInfo: AuthInfo?
-    private var JSONdata: [String: Any] = [:]
-    private var AutfInfo: [String: Any] = [:]
+    
+    // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        LoginButton.layer.cornerRadius = 15.0
+        loginButton.layer.cornerRadius = 15.0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,28 +38,27 @@ class LoginViewController: UIViewController {
 }
 
 // MARK: Register
+
 private extension LoginViewController {
 
     @IBAction func RegisterButtonAction(_ sender: Any) {
-    // func alamofireCodableRegisterUserWith(email: String, password: String) {
         SVProgressHUD.show()
-
-        // check if strings exist
-        if (EmailTextField.text?.isEmpty) == nil{
-            EmailTextField.text = "Nothing writen"
-        }
-        if (PasswordTextField.text?.isEmpty) == nil{
-            PasswordTextField.text = "Nothing writen"
-        }
-        // bez ovog ne radi....
-        let email_text: String = EmailTextField.text!
-        let password_text: String = PasswordTextField.text!
+        guard
+                   let email = emailTextField.text,
+                   let password = passwordTextField.text
+               else {
+                   return
+               }
+               let params = [
+                           "email": email,
+                           "password": password
+                       ]
         
         // setting parameters
         let parameters: [String: String] = [
-            "email": email_text,
-            "password": password_text,
-            "password_confirmation": password_text
+            "email": email,
+            "password": password,
+            "password_confirmation": password
         ]
 
         // Api request
@@ -71,9 +73,7 @@ private extension LoginViewController {
             .responseDecodable(of: UserResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let userResponse):
-                    print(userResponse.user.email)
-                    print(userResponse.user.id)
-                    print(userResponse.user.imageUrl)
+                    self?.userResponse = userResponse
                     let headers = response.response?.headers.dictionary ?? [:]
                     self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
                     SVProgressHUD.dismiss()
@@ -96,20 +96,21 @@ private extension LoginViewController {
     @IBAction func LoginButtonAction(_ sender: Any) {
         SVProgressHUD.show()
         
-        // check if strings exist
-        if (EmailTextField.text?.isEmpty) == nil{
-            EmailTextField.text = "Nothing writen"
-        }
-        if (PasswordTextField.text?.isEmpty) == nil{
-            PasswordTextField.text = "Nothing writen"
-        }
-        // bez ovog ne radi....
-        let email_text: String = EmailTextField.text!
-        let password_text: String = PasswordTextField.text!
+        
+        guard
+                   let email = emailTextField.text,
+                   let password = passwordTextField.text
+               else {
+                   return
+               }
+               let params = [
+                           "email": email,
+                           "password": password
+                       ]
 
         let parameters: [String: String] = [
-            "email": email_text,
-            "password": password_text
+            "email": email,
+            "password": password
         ]
 
         AF
@@ -124,25 +125,19 @@ private extension LoginViewController {
             .responseDecodable(of: UserResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let userResponse):
-                    print(userResponse.user.email)
-                    print(userResponse.user.id)
-                    print(userResponse.user.imageUrl)
                     self?.userResponse = userResponse
-                    self?.JSONdata["Email"] = userResponse.user.email
-                    self?.JSONdata["Id"] = userResponse.user.id
-                    self?.JSONdata["ImageUrl"] = userResponse.user.imageUrl
-
                     let headers = response.response?.headers.dictionary ?? [:]
                     self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
                     SVProgressHUD.dismiss()
+                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                    let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+                    self?.navigationController?.pushViewController(viewControllerHome, animated: true)
                 case .failure(let error):
                     print("Error")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
             }
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
-        navigationController?.pushViewController(viewControllerHome, animated: true)
+        
     }
     
 
