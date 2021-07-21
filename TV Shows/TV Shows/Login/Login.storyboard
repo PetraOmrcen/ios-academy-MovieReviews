@@ -83,9 +83,12 @@
                                 <rect key="frame" x="15" y="447.5" width="384" height="1"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uru-n5-vLn">
-                                <rect key="frame" x="15" y="385" width="384" height="1"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uru-n5-vLn">
+                                <rect key="frame" x="15" y="393.5" width="384" height="1"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="9ca-he-3o6"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
