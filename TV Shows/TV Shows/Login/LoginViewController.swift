@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet private weak var registerButton: UIButton!
-    @IBOutlet private weak var checkBoxButton: UIButton!
     @IBOutlet private weak var emailTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
     
@@ -41,7 +40,7 @@ class LoginViewController: UIViewController {
 
 private extension LoginViewController {
 
-    @IBAction func RegisterButtonAction(_ sender: Any) {
+    @IBAction func registerButtonAction(_ sender: Any) {
         SVProgressHUD.show()
         guard
             let email = emailTextField.text,
@@ -85,7 +84,7 @@ private extension LoginViewController {
 
 private extension LoginViewController {
 
-    @IBAction func LoginButtonAction(_ sender: Any) {
+    @IBAction func loginButtonAction(_ sender: Any) {
         SVProgressHUD.show()
         guard
             let email = emailTextField.text,

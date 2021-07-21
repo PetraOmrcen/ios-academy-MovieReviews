@@ -51,7 +51,7 @@
                                     <color key="titleColor" name="PurpleApp"/>
                                 </state>
                                 <connections>
-                                    <action selector="LoginButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="OBx-hA-qkt"/>
+                                    <action selector="loginButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Pto-M4-fbF"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Login" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uV8-cq-wPD">
@@ -66,7 +66,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
-                                    <action selector="RegisterButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="VpK-YZ-3gq"/>
+                                    <action selector="registerButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="GtP-Ou-M97"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -100,10 +100,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="dnF-WT-UfH"/>
                     <connections>
-                        <outlet property="EmailTextField" destination="wDC-Xv-m6Y" id="isu-9n-E4g"/>
-                        <outlet property="LoginButton" destination="tu4-sC-OLZ" id="Bhg-Hw-NR2"/>
-                        <outlet property="PasswordTextField" destination="z5O-4y-qWF" id="DGW-Cx-GVV"/>
-                        <outlet property="RegisterButton" destination="gA7-iz-Ccq" id="bsk-6r-Rpq"/>
+                        <outlet property="emailTextField" destination="wDC-Xv-m6Y" id="mzo-U5-xhu"/>
+                        <outlet property="loginButton" destination="tu4-sC-OLZ" id="ceh-bq-FsK"/>
+                        <outlet property="passwordTextField" destination="z5O-4y-qWF" id="Sgf-4J-JvR"/>
+                        <outlet property="registerButton" destination="gA7-iz-Ccq" id="1ky-mc-bNE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
