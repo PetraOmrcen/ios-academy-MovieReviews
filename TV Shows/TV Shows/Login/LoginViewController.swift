@@ -37,31 +37,23 @@ class LoginViewController: UIViewController {
     }
 }
 
-// MARK: Register
+    // MARK: - Register
 
 private extension LoginViewController {
 
     @IBAction func RegisterButtonAction(_ sender: Any) {
         SVProgressHUD.show()
         guard
-                   let email = emailTextField.text,
-                   let password = passwordTextField.text
-               else {
-                   return
-               }
-               let params = [
-                           "email": email,
-                           "password": password
-                       ]
-        
-        // setting parameters
+            let email = emailTextField.text,
+            let password = passwordTextField.text
+        else {
+            return
+        }
         let parameters: [String: String] = [
             "email": email,
             "password": password,
-            "password_confirmation": password
-        ]
-
-        // Api request
+            "password_confirmation": password]
+        
         AF
             .request(
                 "https://tv-shows.infinum.academy/users",
@@ -81,7 +73,7 @@ private extension LoginViewController {
                     let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
                     self?.navigationController?.pushViewController(viewControllerHome, animated: true)
                 case .failure(let error):
-                    print("Error")
+                    print("Error: \(error)")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
             }
@@ -89,29 +81,22 @@ private extension LoginViewController {
     }
 }
 
-// MARK: Login
+    // MARK: - Login
 
 private extension LoginViewController {
 
     @IBAction func LoginButtonAction(_ sender: Any) {
         SVProgressHUD.show()
-        
-        
         guard
-                   let email = emailTextField.text,
-                   let password = passwordTextField.text
-               else {
-                   return
-               }
-               let params = [
-                           "email": email,
-                           "password": password
-                       ]
+            let email = emailTextField.text,
+            let password = passwordTextField.text
+        else {
+            return
+        }
 
         let parameters: [String: String] = [
             "email": email,
-            "password": password
-        ]
+            "password": password]
 
         AF
             .request(
@@ -133,15 +118,16 @@ private extension LoginViewController {
                     let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
                     self?.navigationController?.pushViewController(viewControllerHome, animated: true)
                 case .failure(let error):
-                    print("Error")
+                    print("Erro: \(error)")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
             }
         
     }
-    
 
-    func handleSuccesfulLogin(for user: User, headers: [String: String]) {
+    // MARK: - Private functions -
+    
+    private func handleSuccesfulLogin(for user: User, headers: [String: String]) {
         guard let authInfo = try? AuthInfo(headers: headers) else {
             SVProgressHUD.showError(withStatus: "Missing headers")
             return
