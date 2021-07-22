@@ -76,7 +76,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="CheckBoxButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="gtj-v1-ek2"/>
+                                    <action selector="checkBoxButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="5mX-sM-3of"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmJ-uO-fyJ">
@@ -147,12 +147,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="CheckBoxButton" destination="OZX-TL-bkt" id="xLp-7A-wUt"/>
-                        <outlet property="EmailTextField" destination="wDC-Xv-m6Y" id="isu-9n-E4g"/>
-                        <outlet property="EyeButton" destination="5hu-Yi-9Ml" id="1jF-xX-lLn"/>
-                        <outlet property="LoginButton" destination="tu4-sC-OLZ" id="Bhg-Hw-NR2"/>
-                        <outlet property="PasswordTextField" destination="z5O-4y-qWF" id="DGW-Cx-GVV"/>
-                        <outlet property="RegisterButton" destination="gA7-iz-Ccq" id="bsk-6r-Rpq"/>
+                        <outlet property="checkBoxButton" destination="OZX-TL-bkt" id="930-HJ-InZ"/>
+                        <outlet property="emailTextField" destination="wDC-Xv-m6Y" id="WEr-Jq-3Jc"/>
+                        <outlet property="eyeButton" destination="5hu-Yi-9Ml" id="iOp-Y4-Wl8"/>
+                        <outlet property="loginButton" destination="tu4-sC-OLZ" id="rf8-14-nka"/>
+                        <outlet property="passwordTextField" destination="z5O-4y-qWF" id="Bet-bk-XlQ"/>
+                        <outlet property="registerButton" destination="gA7-iz-Ccq" id="a5v-Tm-RXH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
