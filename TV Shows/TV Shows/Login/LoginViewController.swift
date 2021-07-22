@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     // MARK: - Outlets
 
@@ -23,35 +23,26 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        emailTextField.textColor = UIColor.white
-        passwordTextField.textColor = UIColor.white
+        emailTextField.textColor = .white
+        passwordTextField.textColor = .white
         checkBoxButton.setImage(UIImage(named: "ic-checkbox-unselected"), for: .normal)
-        eyeButton.setImage(UIImage(named: "open_eye"), for: .normal)
+        checkBoxButton.setImage(UIImage(named: "ic-checkbox-selected"), for: .selected)
+        eyeButton.setImage(UIImage(named: "closed_eye"), for: .normal)
         loginButton.layer.cornerRadius = 15.0
-        emailTextField.attributedPlaceholder = NSAttributedString(string:"username",
-                                                                     attributes:[NSAttributedString.Key.foregroundColor: UIColor.white])
-        passwordTextField.attributedPlaceholder = NSAttributedString(string:"password",
-                                                                     attributes:[NSAttributedString.Key.foregroundColor: UIColor.white])
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        emailTextField.attributedPlaceholder = NSAttributedString(string: "username", attributes: attributes)
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "password", attributes: attributes)
     }
     
     // MARK: - Actions
     
-    @available(iOS 13.0, *)
     @IBAction func checkBoxButtonAction(_ sender: Any) {
-        if checkBoxButton.image(for: .normal) ==  UIImage(named: "ic-checkbox-selected"){
-            checkBoxButton.setImage(UIImage(named: "ic-checkbox-unselected"), for: .normal)
-        }else{
-            checkBoxButton.setImage(UIImage(named: "ic-checkbox-selected"), for: .normal)
-        }
+        checkBoxButton.isSelected.toggle()
     }
     
     @IBAction func hideShowPasswordAction(_ sender: Any) {
-        if eyeButton.image(for: .normal) == UIImage(named: "open_eye"){
-            passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-            eyeButton.setImage(UIImage(named: "closed_eye"), for: .normal)
-        }else{
-            passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-            eyeButton.setImage(UIImage(named: "open_eye"), for: .normal)
-        }
+        passwordTextField.isSecureTextEntry.toggle()
+        let imageName = passwordTextField.isSecureTextEntry ? "closed_eye" : "open_eye"
+        eyeButton.setImage(UIImage(named: imageName), for: .normal)
     }
 }
