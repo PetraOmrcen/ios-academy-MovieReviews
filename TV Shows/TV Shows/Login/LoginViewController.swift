@@ -41,7 +41,6 @@ class LoginViewController: UIViewController {
 private extension LoginViewController {
 
     @IBAction func registerButtonAction(_ sender: Any) {
-        SVProgressHUD.show()
         guard
             let email = emailTextField.text,
             let password = passwordTextField.text
@@ -52,31 +51,8 @@ private extension LoginViewController {
             "email": email,
             "password": password,
             "password_confirmation": password]
-        
-        AF
-            .request(
-                "https://tv-shows.infinum.academy/users",
-                method: .post,
-                parameters: parameters,
-                encoder: JSONParameterEncoder.default
-            )
-            .validate()
-            .responseDecodable(of: UserResponse.self) { [weak self] response in
-                switch response.result {
-                case .success(let userResponse):
-                    self?.userResponse = userResponse
-                    let headers = response.response?.headers.dictionary ?? [:]
-                    self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
-                    SVProgressHUD.dismiss()
-                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                    let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
-                    self?.navigationController?.pushViewController(viewControllerHome, animated: true)
-                case .failure(let error):
-                    print("Error: \(error)")
-                    SVProgressHUD.showError(withStatus: "Failure")
-                }
-            }
-        
+        SVProgressHUD.show()
+        loginRegisterRequest(parameters: parameters, code: "users")
     }
 }
 
@@ -85,7 +61,6 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     @IBAction func loginButtonAction(_ sender: Any) {
-        SVProgressHUD.show()
         guard
             let email = emailTextField.text,
             let password = passwordTextField.text
@@ -96,32 +71,8 @@ private extension LoginViewController {
         let parameters: [String: String] = [
             "email": email,
             "password": password]
-
-        AF
-            .request(
-                "https://tv-shows.infinum.academy/users/sign_in",
-                method: .post,
-                parameters: parameters,
-                encoder: JSONParameterEncoder.default
-            )
-            
-            .validate()
-            .responseDecodable(of: UserResponse.self) { [weak self] response in
-                switch response.result {
-                case .success(let userResponse):
-                    self?.userResponse = userResponse
-                    let headers = response.response?.headers.dictionary ?? [:]
-                    self?.handleSuccesfulLogin(for: userResponse.user, headers: headers)
-                    SVProgressHUD.dismiss()
-                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                    let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
-                    self?.navigationController?.pushViewController(viewControllerHome, animated: true)
-                case .failure(let error):
-                    print("Erro: \(error)")
-                    SVProgressHUD.showError(withStatus: "Failure")
-                }
-            }
-        
+        SVProgressHUD.show()
+        loginRegisterRequest(parameters: parameters, code: "users/sign_in")
     }
 
     // MARK: - Private functions -
@@ -132,7 +83,33 @@ private extension LoginViewController {
             return
         }
         self.authInfo = authInfo
-       
+    }
+    
+    private func loginRegisterRequest(parameters: [String: String], code: String){
+        AF
+            .request(
+                "https://tv-shows.infinum.academy/\(code)",
+                method: .post,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default
+            )
+            .validate()
+            .responseDecodable(of: UserResponse.self) { [weak self] response in
+                guard let self = self else { return }
+                switch response.result {
+                case .success(let userResponse):
+                    self.userResponse = userResponse
+                    let headers = response.response?.headers.dictionary ?? [:]
+                    self.handleSuccesfulLogin(for: userResponse.user, headers: headers)
+                    SVProgressHUD.dismiss()
+                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                    let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+                    self.navigationController?.pushViewController(viewControllerHome, animated: true)
+                case .failure(let error):
+                    print("Error: \(error)")
+                    SVProgressHUD.showError(withStatus: "Failure")
+                }
+            }
     }
 
 }
