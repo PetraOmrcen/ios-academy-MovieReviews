@@ -74,16 +74,11 @@ private extension LoginViewController {
         SVProgressHUD.show()
         loginRegisterRequest(parameters: parameters, code: "users/sign_in")
     }
+}
 
     // MARK: - Private functions -
     
-    private func handleSuccesfulLogin(for user: User, headers: [String: String]) {
-        guard let authInfo = try? AuthInfo(headers: headers) else {
-            SVProgressHUD.showError(withStatus: "Missing headers")
-            return
-        }
-        self.authInfo = authInfo
-    }
+private extension LoginViewController {
     
     private func loginRegisterRequest(parameters: [String: String], code: String){
         AF
@@ -102,14 +97,34 @@ private extension LoginViewController {
                     let headers = response.response?.headers.dictionary ?? [:]
                     self.handleSuccesfulLogin(for: userResponse.user, headers: headers)
                     SVProgressHUD.dismiss()
+                    
                     let storyboard = UIStoryboard(name: "Home", bundle: nil)
                     let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
+                    guard let vc = viewControllerHome as? HomeViewController else { return }
+                    vc.authInfo = self.authInfo
+                    vc.userResponse = self.userResponse
                     self.navigationController?.pushViewController(viewControllerHome, animated: true)
+                    
                 case .failure(let error):
-                    print("Error: \(error)")
-                    SVProgressHUD.showError(withStatus: "Failure")
+                    SVProgressHUD.dismiss()
+                    self.errorAlert(error: error)
                 }
             }
+    
     }
-
+    
+    private func handleSuccesfulLogin(for user: User, headers: [String: String]){
+        guard let authInfo = try? AuthInfo(headers: headers) else {
+            SVProgressHUD.showError(withStatus: "Missing headers")
+            return
+        }
+        return self.authInfo = authInfo
+    }
+    
+    private func errorAlert(error: Error){
+        let alert = UIAlertController(title: "Error acured", message: "\(error)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
 }
