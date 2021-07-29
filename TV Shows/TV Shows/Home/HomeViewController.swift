@@ -18,11 +18,9 @@ class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    var userResponse: UserResponse?
-    var authInfo: AuthInfo?
-    var showResponse: ShowsResponse?
-    var showsArray: [Show]?
-    var count: Int?
+    var userResponse: UserResponse!
+    var authInfo: AuthInfo!
+    var shows: [Show] = []
     
     // MARK: - Lifecycle methods
 
@@ -51,22 +49,14 @@ private extension HomeViewController{
              "https://tv-shows.infinum.academy/shows",
              method: .get,
              parameters: ["page": "1", "items": "100"], // pagination arguments
-        headers: HTTPHeaders(self.authInfo!.headers)
+        headers: HTTPHeaders(self.authInfo.headers)
          )
          .validate()
         .responseDecodable(of: ShowsResponse.self) { [weak self] response in
             guard let self = self else { return }
             switch response.result {
             case .success(let showsResponse):
-                self.showResponse = showsResponse
-                self.showsArray = showsResponse.shows
-                guard
-                    let count = self.showsArray?.count
-                else {
-                    return
-                }
-                self.count = count
-                print("broj serija:", self.count)
+                self.shows = showsResponse.shows
                 self.tableView.reloadData()
                 SVProgressHUD.showSuccess(withStatus: "Success")
                 SVProgressHUD.dismiss()
@@ -82,14 +72,8 @@ private extension HomeViewController{
 extension HomeViewController: UITableViewDataSource{
     //tableView.reloadData() //beacuse of api calls
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // Default implementation - if not implemented would return 1 as well
-        return 1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("self.count u tableview", self.count)
-        return self.showResponse?.shows.count ?? 0
+        return shows.count
         
     }
     
@@ -99,8 +83,7 @@ extension HomeViewController: UITableViewDataSource{
             for: indexPath
         ) as! TVShowTableViewCell
         
-        //zasto toliko problema svaki put??????????????????
-        cell.showNameLabel.text = self.showResponse?.shows[indexPath.row].title
+        cell.showNameLabel.text = shows[indexPath.row].title
 //        let show = String(self.showResponse?.shows[indexPath.row].title))
 //        cell.configure(with: show)
         
@@ -111,18 +94,19 @@ extension HomeViewController: UITableViewDataSource{
 extension HomeViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let show = self.showResponse?.shows[indexPath.row].title
-        
+       
+        // Push ShowDetailsViewController
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let viewControllerShowDetails = storyboard.instantiateViewController(withIdentifier: "ViewController_ShowDetails")
+        guard let vc = viewControllerShowDetails as? ShowDetailsViewController else { return }
+        vc.authInfo = self.authInfo
+        vc.showId = shows[indexPath.row].id
+        vc.showData = shows[indexPath.row]
         self.navigationController?.pushViewController(viewControllerShowDetails, animated: true)
     }
     
+    // Treba li ovo
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 20 {
-            //something
-            tableView.reloadData()
-        }
     }
 }
 
