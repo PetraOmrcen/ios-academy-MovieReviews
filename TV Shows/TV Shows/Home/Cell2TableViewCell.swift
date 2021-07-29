@@ -11,11 +11,12 @@ class Cell2TableViewCell: UITableViewCell {
     
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet private weak var ratingView: RatingView!
+    @IBOutlet weak var ratingView: RatingView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         ratingView.configure(withStyle: .small)
+        ratingView.isEnabled = false
         // Initialization code
     }
 

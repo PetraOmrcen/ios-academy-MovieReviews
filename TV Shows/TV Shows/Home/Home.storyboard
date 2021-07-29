@@ -106,10 +106,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell1TableViewCell" id="ANc-4y-I5u" customClass="Cell1TableViewCell" customModule="TV_Shows" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="560"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="580"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ANc-4y-I5u" id="ZGe-4g-cia">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="560"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="580"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RMs-Q1-VW3">
@@ -146,7 +146,7 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="RMs-Q1-VW3" secondAttribute="bottom" id="9kS-2k-n5P"/>
+                                                <constraint firstAttribute="bottom" secondItem="RMs-Q1-VW3" secondAttribute="bottom" constant="20" id="9kS-2k-n5P"/>
                                                 <constraint firstItem="RMs-Q1-VW3" firstAttribute="leading" secondItem="ZGe-4g-cia" secondAttribute="leading" constant="20" id="Evr-mT-9kL"/>
                                                 <constraint firstItem="RMs-Q1-VW3" firstAttribute="top" secondItem="ZGe-4g-cia" secondAttribute="top" constant="20" id="F1F-tJ-ofQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="RMs-Q1-VW3" secondAttribute="trailing" constant="20" id="luO-2A-0P0"/>
@@ -160,7 +160,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell2TableViewCell" id="eLU-am-MDd" customClass="Cell2TableViewCell" customModule="TV_Shows" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="584.5" width="414" height="106"/>
+                                        <rect key="frame" x="0.0" y="604.5" width="414" height="106"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eLU-am-MDd" id="dbR-Pl-VCN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="106"/>

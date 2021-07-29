@@ -9,7 +9,6 @@ import UIKit
 
 class TVShowTableViewCell: UITableViewCell {
     
-    //@IBOutlet private var showNameLabel: UILabel!
     @IBOutlet var showNameLabel: UILabel!
 
     override func awakeFromNib() {
@@ -18,8 +17,6 @@ class TVShowTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func configure(with showName: String){

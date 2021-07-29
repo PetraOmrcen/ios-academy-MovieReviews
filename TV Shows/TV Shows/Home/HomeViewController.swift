@@ -40,10 +40,9 @@ class HomeViewController: UIViewController {
 }
     
     // MARK:  - Private functions -
-private extension HomeViewController{
-    
-    private func showListsRequest(){
 
+private extension HomeViewController{
+    private func showListsRequest(){
        AF
         .request(
              "https://tv-shows.infinum.academy/shows",
@@ -65,16 +64,12 @@ private extension HomeViewController{
                 print(error)
             }
          }
-    
     }
 }
 
 extension HomeViewController: UITableViewDataSource{
-    //tableView.reloadData() //beacuse of api calls
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shows.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,7 +81,6 @@ extension HomeViewController: UITableViewDataSource{
         cell.showNameLabel.text = shows[indexPath.row].title
 //        let show = String(self.showResponse?.shows[indexPath.row].title))
 //        cell.configure(with: show)
-        
         return cell
     }
 }
@@ -104,16 +98,11 @@ extension HomeViewController: UITableViewDelegate{
         vc.showData = shows[indexPath.row]
         self.navigationController?.pushViewController(viewControllerShowDetails, animated: true)
     }
-    
-    // Treba li ovo
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    }
 }
 
 // MARK: - Private
 
 private extension HomeViewController {
-
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self

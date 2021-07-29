@@ -9,13 +9,12 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 
-class ShowDetailsViewController: UIViewController, UITableViewDelegate {
+class ShowDetailsViewController: UIViewController {
     
     var authInfo: AuthInfo!
     var showId: String = ""
     var showData: Show!
     var reviews: [Review] = []
-    
     
     @IBOutlet weak var writeReviewButton: UIButton!
     @IBOutlet private weak var tableView: UITableView!
@@ -37,7 +36,6 @@ class ShowDetailsViewController: UIViewController, UITableViewDelegate {
         vc.showId = showId
         present(navigationController, animated: true)
     }
-    
 }
 
 private extension ShowDetailsViewController {
@@ -45,8 +43,12 @@ private extension ShowDetailsViewController {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        //tableView.rowHeight = UITableView.automaticDimension
-        //tableView.estimatedRowHeight = 600
+    }
+}
+
+extension ShowDetailsViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -63,9 +65,10 @@ extension ShowDetailsViewController: UITableViewDataSource{
         if indexPath.row == 0{
             cell1.titleLabel.text = showData.title
             cell1.decriptionLabel.text = showData.description
-            cell1.reviwAndRatingLabel.text = "\(reviews.count) REVIEWS ,\(showData.averageRating) AVERAGE"
+            cell1.reviwAndRatingLabel.text = "\(reviews.count) REVIEWS, \(showData.averageRating) AVERAGE"
             return cell1
         } else{
+            cell2.ratingView.setRoundedRating(Double(reviews[indexPath.row-1].rating))
             cell2.emailLabel.text = reviews[indexPath.row-1].user.email
             cell2.reviewLabel.text = reviews[indexPath.row-1].comment //mozda ide -1
             return cell2
@@ -76,6 +79,7 @@ extension ShowDetailsViewController: UITableViewDataSource{
         return reviews.count + 1
     }
 }
+
 
 private extension ShowDetailsViewController{
     

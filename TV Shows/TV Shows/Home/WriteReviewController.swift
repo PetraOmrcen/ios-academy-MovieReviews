@@ -13,7 +13,7 @@ class WriteReviewController: UIViewController {
     
     var authInfo: AuthInfo!
     var showId: String = ""
-    var rating: Int!
+    var rating: Int = 1
     var newReview: Review?
     
     @IBOutlet private var ratingView: RatingView!
@@ -32,23 +32,13 @@ class WriteReviewController: UIViewController {
           )
         rating = 5
     }
-    
-    
-    
-//    override func awakeFromNib() {
-//            super.awakeFromNib()
-//            // Initialization code - small style and disable changing the rating
-//            ratingView.configure(withStyle: .small)
-//            ratingView.isEnabled = false
-//    }
-    
+
     @objc private func didSelectClose() {
-        // programatically dismiss view controller
-        dismiss(animated: true, completion: nil) // push <-> pop; present <-> dismiss
+        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func submitButtonAction(_ sender: Any) {
-        let rating = "\(rating)"
+        let rating = "\(ratingView.rating)"
         guard let comment = commentTextView.text else {return}
         let parameters: [String: String] = [
             "rating": rating,
@@ -59,8 +49,6 @@ class WriteReviewController: UIViewController {
         writeReviewRegisterRequest(parameters: parameters)
     }
 }
-
-
 
 private extension WriteReviewController {
 
@@ -87,7 +75,6 @@ private extension WriteReviewController {
                     self.errorAlert(error: error)
                 }
             }
-
     }
 
     private func errorAlert(error: Error){
@@ -95,6 +82,4 @@ private extension WriteReviewController {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alert, animated: true)
     }
-
-
 }
