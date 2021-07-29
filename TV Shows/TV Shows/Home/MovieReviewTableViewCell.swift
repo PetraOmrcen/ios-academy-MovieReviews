@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Cell2TableViewCell: UITableViewCell {
+class MovieReviewTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
@@ -17,13 +17,10 @@ class Cell2TableViewCell: UITableViewCell {
         super.awakeFromNib()
         ratingView.configure(withStyle: .small)
         ratingView.isEnabled = false
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

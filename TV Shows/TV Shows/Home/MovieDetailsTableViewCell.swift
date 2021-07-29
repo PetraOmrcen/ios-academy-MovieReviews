@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Cell1TableViewCell: UITableViewCell {
+class MovieDetailsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var decriptionLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,14 +18,10 @@ class Cell1TableViewCell: UITableViewCell {
         super.awakeFromNib()
         rewiewNameLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
         titleLabel.font = UIFont.boldSystemFont(ofSize: 38.0)
-        
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

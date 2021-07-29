@@ -11,14 +11,21 @@ import Alamofire
 
 class WriteReviewController: UIViewController {
     
-    var authInfo: AuthInfo!
-    var showId: String = ""
-    var rating: Int = 1
-    var newReview: Review?
+    // MARK: - Private UI
     
     @IBOutlet private var ratingView: RatingView!
-    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet private weak var commentTextView: UITextView!
     @IBOutlet private var submitButton: UIButton!
+    
+    // MARK: - Properties
+    
+    var authInfo: AuthInfo!
+    var showId: String = ""
+    var rating: Int?
+    var newReview: Review?
+    weak var delegate: ReviewAddedDelegate?
+    
+    // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +37,16 @@ class WriteReviewController: UIViewController {
             target: self,
             action: #selector(didSelectClose)
           )
-        rating = 5
     }
 
+    // MARK: - Private func
+    
     @objc private func didSelectClose() {
         dismiss(animated: true, completion: nil)
     }
 
+    // MARK: - Actions
+    
     @IBAction func submitButtonAction(_ sender: Any) {
         let rating = "\(ratingView.rating)"
         guard let comment = commentTextView.text else {return}
@@ -47,8 +57,12 @@ class WriteReviewController: UIViewController {
         
         SVProgressHUD.show()
         writeReviewRegisterRequest(parameters: parameters)
+        commentTextView.text = ""
+        ratingView.rating = 0
     }
 }
+
+// MARK: - Private
 
 private extension WriteReviewController {
 
@@ -69,7 +83,9 @@ private extension WriteReviewController {
                     self.newReview = newReviewResponse.review
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     SVProgressHUD.dismiss()
+                    self.delegate?.didAddReview(review: self.newReview!)
                     print(self.newReview)
+                
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     self.errorAlert(error: error)

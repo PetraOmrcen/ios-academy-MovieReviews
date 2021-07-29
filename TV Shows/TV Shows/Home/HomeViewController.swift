@@ -34,7 +34,6 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationItem.setHidesBackButton(true, animated: true)
-        //probala sam i ovako, ali nije radilo: navigationController?.setViewControllers([homeViewController], animated: true)
     }
     
 }
@@ -79,8 +78,6 @@ extension HomeViewController: UITableViewDataSource{
         ) as! TVShowTableViewCell
         
         cell.showNameLabel.text = shows[indexPath.row].title
-//        let show = String(self.showResponse?.shows[indexPath.row].title))
-//        cell.configure(with: show)
         return cell
     }
 }
@@ -103,7 +100,7 @@ extension HomeViewController: UITableViewDelegate{
 // MARK: - Private
 
 private extension HomeViewController {
-    func setupTableView() {
+     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
     }

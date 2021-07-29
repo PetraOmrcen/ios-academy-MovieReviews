@@ -11,13 +11,19 @@ import Alamofire
 
 class ShowDetailsViewController: UIViewController {
     
+    // MARK: - Private UI
+    
+    @IBOutlet private weak var writeReviewButton: UIButton!
+    @IBOutlet private weak var tableView: UITableView!
+    
+    // MARK: - Properties
+    
     var authInfo: AuthInfo!
     var showId: String = ""
     var showData: Show!
     var reviews: [Review] = []
     
-    @IBOutlet weak var writeReviewButton: UIButton!
-    @IBOutlet private weak var tableView: UITableView!
+    // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +31,8 @@ class ShowDetailsViewController: UIViewController {
         displayShowRequest()
         setupTableView()
     }
+    
+    // MARK: - Actions
     
     @IBAction func writeReviewAction(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -38,13 +46,7 @@ class ShowDetailsViewController: UIViewController {
     }
 }
 
-private extension ShowDetailsViewController {
-
-    func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-}
+// MARK: - UITableViewDelegate
 
 extension ShowDetailsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -52,15 +54,18 @@ extension ShowDetailsViewController: UITableViewDelegate{
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension ShowDetailsViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell1 = tableView.dequeueReusableCell(
-            withIdentifier: "Cell1TableViewCell",
-            for: indexPath) as! Cell1TableViewCell
+            withIdentifier: "MovieDetailsTableViewCell",
+            for: indexPath) as! MovieDetailsTableViewCell
         
         let cell2 = tableView.dequeueReusableCell(
-            withIdentifier: "Cell2TableViewCell",
-            for: indexPath) as! Cell2TableViewCell
+            withIdentifier: "MovieReviewTableViewCell",
+            for: indexPath) as!
+            MovieReviewTableViewCell
         
         if indexPath.row == 0{
             cell1.titleLabel.text = showData.title
@@ -70,7 +75,7 @@ extension ShowDetailsViewController: UITableViewDataSource{
         } else{
             cell2.ratingView.setRoundedRating(Double(reviews[indexPath.row-1].rating))
             cell2.emailLabel.text = reviews[indexPath.row-1].user.email
-            cell2.reviewLabel.text = reviews[indexPath.row-1].comment //mozda ide -1
+            cell2.reviewLabel.text = reviews[indexPath.row-1].comment
             return cell2
         }
     }
@@ -80,6 +85,15 @@ extension ShowDetailsViewController: UITableViewDataSource{
     }
 }
 
+// MARK: - Private
+
+private extension ShowDetailsViewController {
+
+    func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+}
 
 private extension ShowDetailsViewController{
     
@@ -105,5 +119,16 @@ private extension ShowDetailsViewController{
             }
          }
     
+    }
+}
+
+protocol ReviewAddedDelegate: AnyObject {
+    func didAddReview(review: Review)
+}
+
+extension ShowDetailsViewController: ReviewAddedDelegate{
+    func didAddReview(review: Review) {
+        reviews.append(review)
+        tableView.reloadData()
     }
 }
