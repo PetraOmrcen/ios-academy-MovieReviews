@@ -32,7 +32,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sN6-PE-2Xo">
                                                     <rect key="frame" x="10" y="5" width="384" height="54"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bitmap" translatesAutoresizingMaskIntoConstraints="NO" id="AE7-xt-bz5">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AE7-xt-bz5">
                                                             <rect key="frame" x="0.0" y="0.0" width="70" height="54"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="70" id="Klu-D1-q7c"/>
@@ -56,6 +56,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="iconImageView" destination="AE7-xt-bz5" id="Gjp-vz-GIO"/>
                                             <outlet property="showNameLabel" destination="H7f-QP-e78" id="7oU-KX-asA"/>
                                         </connections>
                                     </tableViewCell>
@@ -106,14 +107,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsTableViewCell" id="ANc-4y-I5u" customClass="MovieDetailsTableViewCell" customModule="TV_Shows" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="580"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="730"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ANc-4y-I5u" id="ZGe-4g-cia">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="580"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="730"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RMs-Q1-VW3">
-                                                    <rect key="frame" x="20" y="20" width="374" height="540"/>
+                                                    <rect key="frame" x="20" y="20" width="374" height="690"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QqC-fm-Ute">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="45.5"/>
@@ -121,23 +122,27 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="Bitmap" translatesAutoresizingMaskIntoConstraints="NO" id="eNB-ec-Wiw">
-                                                            <rect key="frame" x="0.0" y="65.5" width="374" height="350"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="eNB-ec-Wiw">
+                                                            <rect key="frame" x="0.0" y="65.5" width="374" height="500"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="500" id="Vcm-eq-21r"/>
+                                                                <constraint firstAttribute="width" constant="374" id="nCl-Wh-p5v"/>
+                                                            </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNb-MR-std">
-                                                            <rect key="frame" x="0.0" y="435.5" width="374" height="21"/>
+                                                            <rect key="frame" x="0.0" y="585.5" width="374" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Review" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VtJ-HC-qc9">
-                                                            <rect key="frame" x="0.0" y="476.5" width="374" height="26.5"/>
+                                                            <rect key="frame" x="0.0" y="626.5" width="374" height="26.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTg-Bu-23n">
-                                                            <rect key="frame" x="0.0" y="523" width="374" height="17"/>
+                                                            <rect key="frame" x="0.0" y="673" width="374" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -154,13 +159,14 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="decriptionLabel" destination="kNb-MR-std" id="Pux-KM-dca"/>
+                                            <outlet property="detailsPictureUIImage" destination="eNB-ec-Wiw" id="aze-h2-sOk"/>
                                             <outlet property="reviwAndRatingLabel" destination="dTg-Bu-23n" id="9kt-el-VzA"/>
                                             <outlet property="rewiewNameLabel" destination="VtJ-HC-qc9" id="8OQ-2I-pW2"/>
                                             <outlet property="titleLabel" destination="QqC-fm-Ute" id="bic-G0-pIv"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieReviewTableViewCell" id="eLU-am-MDd" customClass="MovieReviewTableViewCell" customModule="TV_Shows" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="604.5" width="414" height="106"/>
+                                        <rect key="frame" x="0.0" y="754.5" width="414" height="106"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eLU-am-MDd" id="dbR-Pl-VCN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="106"/>
@@ -172,8 +178,8 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DzM-yS-vb3">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-kr-Ze8">
-                                                                    <rect key="frame" x="0.0" y="0.5" width="50" height="49"/>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-kr-Ze8">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="ZTK-2i-DU3"/>
@@ -221,6 +227,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="emailLabel" destination="ZQw-6t-cCb" id="XLR-qJ-pgS"/>
+                                            <outlet property="profilePictureImage" destination="eJR-kr-Ze8" id="zYa-LS-vfH"/>
                                             <outlet property="ratingView" destination="iGf-P2-4Tj" id="977-F1-ycP"/>
                                             <outlet property="reviewLabel" destination="zrf-AL-StN" id="LxG-Ji-NNY"/>
                                         </connections>
@@ -328,10 +335,83 @@
             </objects>
             <point key="canvasLocation" x="-849.27536231884062" y="460.71428571428567"/>
         </scene>
+        <!--Profile Details View Controller-->
+        <scene sceneID="aRJ-15-flP">
+            <objects>
+                <viewController storyboardIdentifier="ViewController_ProfileDetails" id="u4r-6N-OoK" customClass="ProfileDetailsViewController" customModule="TV_Shows" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eGo-Co-IS1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6uU-Ox-cZz">
+                                <rect key="frame" x="35" y="104" width="344" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-profile-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="zBV-hp-HX0">
+                                <rect key="frame" x="20" y="162" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="G95-GJ-nN5"/>
+                                    <constraint firstAttribute="width" constant="150" id="zqg-gV-7UF"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqZ-LD-xA8">
+                                <rect key="frame" x="20" y="374" width="374" height="45"/>
+                                <color key="backgroundColor" name="PurpleApp"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="bHD-zG-cHE"/>
+                                </constraints>
+                                <color key="tintColor" name="AccentColor"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutAction:" destination="u4r-6N-OoK" eventType="touchUpInside" id="sxH-J0-bBw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0l-sn-hSR">
+                                <rect key="frame" x="198" y="225" width="161" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Change Profile Photo">
+                                    <color key="titleColor" name="PurpleApp"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeProfilePictureAction:" destination="u4r-6N-OoK" eventType="touchUpInside" id="O35-LI-6rN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xm5-fO-5pA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HqZ-LD-xA8" firstAttribute="top" secondItem="eGo-Co-IS1" secondAttribute="topMargin" constant="330" id="1KC-FF-2vJ"/>
+                            <constraint firstItem="6uU-Ox-cZz" firstAttribute="top" secondItem="eGo-Co-IS1" secondAttribute="topMargin" constant="60" id="407-zT-OCG"/>
+                            <constraint firstItem="J0l-sn-hSR" firstAttribute="top" secondItem="eGo-Co-IS1" secondAttribute="top" constant="225" id="5qj-Gc-naO"/>
+                            <constraint firstItem="xm5-fO-5pA" firstAttribute="trailing" secondItem="J0l-sn-hSR" secondAttribute="trailing" constant="55" id="DdR-F3-2mk"/>
+                            <constraint firstItem="xm5-fO-5pA" firstAttribute="trailing" secondItem="6uU-Ox-cZz" secondAttribute="trailing" constant="35" id="Njf-kC-5ZB"/>
+                            <constraint firstItem="xm5-fO-5pA" firstAttribute="trailing" secondItem="HqZ-LD-xA8" secondAttribute="trailing" constant="20" id="SPt-fj-Osq"/>
+                            <constraint firstItem="6uU-Ox-cZz" firstAttribute="leading" secondItem="xm5-fO-5pA" secondAttribute="leading" constant="35" id="Tmh-LK-bm5"/>
+                            <constraint firstItem="zBV-hp-HX0" firstAttribute="top" secondItem="6uU-Ox-cZz" secondAttribute="topMargin" constant="50" id="Yj0-Lb-M76"/>
+                            <constraint firstItem="zBV-hp-HX0" firstAttribute="leading" secondItem="xm5-fO-5pA" secondAttribute="leading" constant="20" id="bVr-Ei-iz9"/>
+                            <constraint firstItem="HqZ-LD-xA8" firstAttribute="leading" secondItem="xm5-fO-5pA" secondAttribute="leading" constant="20" id="fnn-Yy-Ju3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailLabel" destination="6uU-Ox-cZz" id="cW4-eV-5lD"/>
+                        <outlet property="logoutButton" destination="HqZ-LD-xA8" id="kJ5-3Z-FWf"/>
+                        <outlet property="profilePictureImage" destination="zBV-hp-HX0" id="iMJ-Ks-rVT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kUw-0k-PLr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2104.3478260869565" y="-40.178571428571423"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="Bitmap" width="350" height="350"/>
-        <image name="person.crop.circle" catalog="system" width="128" height="121"/>
+        <image name="ic-profile-placeholder" width="150" height="150"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="PurpleApp">
             <color red="0.32199999690055847" green="0.21199999749660492" blue="0.54900002479553223" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -10,7 +10,7 @@ import Foundation
 struct User: Decodable {
     let id: String
     let email: String
-    let imageUrl: String?
+    let imageUrl: URL?
     
 
     enum CodingKeys: String, CodingKey {

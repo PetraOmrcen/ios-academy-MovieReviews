@@ -9,18 +9,18 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController{
     
     // MARK: - Private UI
     
     @IBOutlet private weak var tableView: UITableView!
-
     
     // MARK: - Properties
     
+    private var notificationToken: NSObjectProtocol?
     var userResponse: UserResponse!
     var authInfo: AuthInfo!
-    var shows: [Show] = []
+    private var shows: [Show] = []
     
     // MARK: - Lifecycle methods
 
@@ -28,20 +28,31 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         showListsRequest()
         setupTableView()
-    }
+        
+        let profileDetailsItem = UIBarButtonItem(
+                  image: UIImage(named: "ic-profile"),
+                  style: .plain,
+                  target: self,
+                  action: #selector(profileDetailsActionHandler))
+        profileDetailsItem.tintColor = UIColor.purple
+        navigationItem.rightBarButtonItem = profileDetailsItem
+        
+        //Notifikacija za logout
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidLogout(_:)), name: .didLogout, object: nil)
+        }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationItem.setHidesBackButton(true, animated: true)
     }
-    
 }
     
-    // MARK:  - Private functions -
+    // MARK:  - Private functions
 
-private extension HomeViewController{
-    private func showListsRequest(){
+private extension HomeViewController {
+    func showListsRequest() {
        AF
         .request(
              "https://tv-shows.infinum.academy/shows",
@@ -66,7 +77,7 @@ private extension HomeViewController{
     }
 }
 
-extension HomeViewController: UITableViewDataSource{
+extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shows.count
     }
@@ -77,7 +88,7 @@ extension HomeViewController: UITableViewDataSource{
             for: indexPath
         ) as! TVShowTableViewCell
         
-        cell.showNameLabel.text = shows[indexPath.row].title
+        cell.configure(with: shows[indexPath.row])
         return cell
     }
 }
@@ -91,8 +102,7 @@ extension HomeViewController: UITableViewDelegate{
         let viewControllerShowDetails = storyboard.instantiateViewController(withIdentifier: "ViewController_ShowDetails")
         guard let vc = viewControllerShowDetails as? ShowDetailsViewController else { return }
         vc.authInfo = self.authInfo
-        vc.showId = shows[indexPath.row].id
-        vc.showData = shows[indexPath.row]
+        vc.show = shows[indexPath.row]
         self.navigationController?.pushViewController(viewControllerShowDetails, animated: true)
     }
 }
@@ -104,4 +114,25 @@ private extension HomeViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    @objc
+    func profileDetailsActionHandler() {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let profileDetailsController = storyboard.instantiateViewController(withIdentifier: "ViewController_ProfileDetails")
+        let navigationController = UINavigationController(rootViewController:
+        profileDetailsController)
+        guard let vc = profileDetailsController as? ProfileDetailsViewController else { return }
+        vc.authInfo = authInfo
+        present(navigationController, animated: true)
+    }
+    
+    @objc func onDidLogout(_ notification: Notification) {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "ViewController_Login")
+        navigationController?.setViewControllers([viewControllerLogin], animated: true)
+    }
+}
+
+extension Notification.Name {
+    static let didLogout = Notification.Name("didLogout")
 }

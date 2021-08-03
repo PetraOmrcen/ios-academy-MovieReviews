@@ -22,7 +22,6 @@ class WriteReviewController: UIViewController {
     var authInfo: AuthInfo!
     var showId: String = ""
     var rating: Int?
-    var newReview: Review?
     weak var delegate: ReviewAddedDelegate?
     
     // MARK: - Lifecycle methods
@@ -66,7 +65,7 @@ class WriteReviewController: UIViewController {
 
 private extension WriteReviewController {
 
-    private func writeReviewRegisterRequest(parameters: [String: String]){
+    func writeReviewRegisterRequest(parameters: [String: String]) {
         AF
             .request(
                 "https://tv-shows.infinum.academy/reviews",
@@ -80,20 +79,18 @@ private extension WriteReviewController {
                 guard let self = self else { return }
                 switch response.result {
                 case .success(let newReviewResponse):
-                    self.newReview = newReviewResponse.review
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     SVProgressHUD.dismiss()
-                    self.delegate?.didAddReview(review: self.newReview!)
-                    print(self.newReview)
-                
+                    self.delegate?.didAddReview(review: newReviewResponse.review)
+                    print(newReviewResponse.review as Any)
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     self.errorAlert(error: error)
                 }
             }
     }
-
-    private func errorAlert(error: Error){
+    
+    func errorAlert(error: Error) {
         let alert = UIAlertController(title: "Error acured", message: "\(error)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alert, animated: true)

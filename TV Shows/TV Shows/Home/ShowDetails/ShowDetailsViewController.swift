@@ -19,8 +19,7 @@ class ShowDetailsViewController: UIViewController {
     // MARK: - Properties
     
     var authInfo: AuthInfo!
-    var showId: String = ""
-    var showData: Show!
+    var show: Show!
     var reviews: [Review] = []
     
     // MARK: - Lifecycle methods
@@ -41,14 +40,15 @@ class ShowDetailsViewController: UIViewController {
         writeReviewController)
         guard let vc = writeReviewController as? WriteReviewController else { return }
         vc.authInfo = authInfo
-        vc.showId = showId
+        vc.showId = show.id
+        vc.delegate = self
         present(navigationController, animated: true)
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension ShowDetailsViewController: UITableViewDelegate{
+extension ShowDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -56,28 +56,27 @@ extension ShowDetailsViewController: UITableViewDelegate{
 
 // MARK: - UITableViewDataSource
 
-extension ShowDetailsViewController: UITableViewDataSource{
+extension ShowDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell1 = tableView.dequeueReusableCell(
-            withIdentifier: "MovieDetailsTableViewCell",
-            for: indexPath) as! MovieDetailsTableViewCell
-        
-        let cell2 = tableView.dequeueReusableCell(
-            withIdentifier: "MovieReviewTableViewCell",
-            for: indexPath) as!
-            MovieReviewTableViewCell
-        
-        if indexPath.row == 0{
-            cell1.titleLabel.text = showData.title
-            cell1.decriptionLabel.text = showData.description
-            cell1.reviwAndRatingLabel.text = "\(reviews.count) REVIEWS, \(showData.averageRating) AVERAGE"
-            return cell1
-        } else{
-            cell2.ratingView.setRoundedRating(Double(reviews[indexPath.row-1].rating))
-            cell2.emailLabel.text = reviews[indexPath.row-1].user.email
-            cell2.reviewLabel.text = reviews[indexPath.row-1].comment
-            return cell2
+        if
+            indexPath.row == 0,
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "MovieDetailsTableViewCell",
+                for: indexPath) as? MovieDetailsTableViewCell {
+            cell.configure(showData: show, numberOfReviews: reviews.count)
+            return cell
         }
+        
+        if reviews.count != 0 {
+        
+            if let cell = tableView.dequeueReusableCell(
+                withIdentifier: "MovieReviewTableViewCell",
+                for: indexPath) as? MovieReviewTableViewCell {
+                cell.configure(reviews: reviews, index: indexPath.row-1)
+                return cell
+            }
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,12 +94,12 @@ private extension ShowDetailsViewController {
     }
 }
 
-private extension ShowDetailsViewController{
+private extension ShowDetailsViewController {
     
-    private func displayShowRequest(){
+    private func displayShowRequest() {
        AF
         .request(
-            "https://tv-shows.infinum.academy/shows/\(self.showId)/reviews",
+            "https://tv-shows.infinum.academy/shows/\(self.show.id)/reviews",
              method: .get,
         headers: HTTPHeaders(self.authInfo.headers)
          )
@@ -114,11 +113,10 @@ private extension ShowDetailsViewController{
                 SVProgressHUD.showSuccess(withStatus: "Success")
                 SVProgressHUD.dismiss()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: "Failure shows")
+                //SVProgressHUD.showError(withStatus: "Failure shows")
                 print(error)
             }
          }
-    
     }
 }
 
@@ -126,7 +124,7 @@ protocol ReviewAddedDelegate: AnyObject {
     func didAddReview(review: Review)
 }
 
-extension ShowDetailsViewController: ReviewAddedDelegate{
+extension ShowDetailsViewController: ReviewAddedDelegate {
     func didAddReview(review: Review) {
         reviews.append(review)
         tableView.reloadData()

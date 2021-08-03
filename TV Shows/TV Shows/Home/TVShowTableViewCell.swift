@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TVShowTableViewCell: UITableViewCell {
     
-    @IBOutlet var showNameLabel: UILabel!
+    @IBOutlet private var showNameLabel: UILabel!
+    @IBOutlet private var iconImageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,8 +21,12 @@ class TVShowTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(with showName: String){
-        showNameLabel.text = showName
+    func configure(with show: Show) {
+        showNameLabel.text = show.title
+        iconImageView.kf.setImage(
+            with: show.imageUrl,
+            placeholder: UIImage(named: "ic-show-placeholder-rectangle")
+           )
     }
 
 }

@@ -12,7 +12,7 @@ struct Show: Decodable {
     let id: String
     let averageRating: Double
     let description: String?
-    let imageUrl: String?
+    let imageUrl: URL?
     let noOfReviews: Int
     let title: String
     
@@ -31,7 +31,7 @@ struct ShowsResponse: Decodable {
    
 }
 
-struct Review: Decodable{
+struct Review: Decodable {
     let id: String
     let comment: String
     let rating: Int
@@ -48,7 +48,7 @@ struct Review: Decodable{
         }
 }
 
-struct ReviewsResponse: Decodable{
+struct ReviewsResponse: Decodable {
     let reviews: [Review]
 }
 
