@@ -93,9 +93,6 @@ class ProfileDetailsViewController: UIViewController, UIImagePickerControllerDel
            let imageData = image.jpegData(compressionQuality: 0.9)
        else { return }
        let requestData = MultipartFormData()
-//        requestData.append(
-//            (user?.email.data(using: .utf8))!,
-//            withName: "email")
        requestData.append(
            imageData,
            withName: "image",
@@ -105,7 +102,7 @@ class ProfileDetailsViewController: UIViewController, UIImagePickerControllerDel
     AF
     .upload(
         multipartFormData: requestData,
-        to: "https://tv-shows.infinum.academy/users?email=proba1@gmail.com",
+        to: "https://tv-shows.infinum.academy/users",
         method: .put,
         headers: HTTPHeaders(self.authInfo.headers)
     )
