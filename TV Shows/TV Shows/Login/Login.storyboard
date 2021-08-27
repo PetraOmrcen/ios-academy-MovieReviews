@@ -97,18 +97,18 @@
                                     <action selector="hideShowPasswordAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="mhM-Jm-NOg"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wqz-5M-Ewa">
-                                <rect key="frame" x="20" y="433" width="374" height="1"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="CQm-CA-alN"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oM1-Mr-l2D">
                                 <rect key="frame" x="20" y="484" width="374" height="1"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="egw-SG-i5B"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wqz-5M-Ewa">
+                                <rect key="frame" x="20" y="433" width="374" height="1"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="CQm-CA-alN"/>
                                 </constraints>
                             </view>
                         </subviews>

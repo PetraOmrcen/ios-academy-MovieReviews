@@ -99,24 +99,24 @@ class ProfileDetailsViewController: UIViewController, UIImagePickerControllerDel
            fileName: "image.jpg",
            mimeType: "image/jpg")
         
-    AF
-    .upload(
-        multipartFormData: requestData,
-        to: "https://tv-shows.infinum.academy/users",
-        method: .put,
-        headers: HTTPHeaders(self.authInfo.headers)
-    )
-    .validate()
-    .responseDecodable(of: UserResponse.self) { response in
-        print(response)
-        switch response.result {
-        case .success(let userResponse):
-            self.user = userResponse.user
-        case .failure(let error):
-            SVProgressHUD.showError(withStatus: "Failure picture upload")
-            print(error)
+        AF
+        .upload(
+            multipartFormData: requestData,
+            to: "https://tv-shows.infinum.academy/users",
+            method: .put,
+            headers: HTTPHeaders(self.authInfo.headers)
+        )
+        .validate()
+        .responseDecodable(of: UserResponse.self) { response in
+            print(response)
+            switch response.result {
+            case .success(let userResponse):
+                self.user = userResponse.user
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: "Failure picture upload")
+                print(error)
+            }
         }
-    }
    }
 }
 

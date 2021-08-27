@@ -21,6 +21,7 @@ class ShowDetailsViewController: UIViewController {
     var authInfo: AuthInfo!
     var show: Show!
     var reviews: [Review] = []
+    var refreshControl: UIRefreshControl?
     
     // MARK: - Lifecycle methods
     
@@ -29,6 +30,7 @@ class ShowDetailsViewController: UIViewController {
         writeReviewButton.layer.cornerRadius = 23.0
         displayShowRequest()
         setupTableView()
+        configureRefreshControl()
     }
     
     // MARK: - Actions
@@ -92,6 +94,24 @@ private extension ShowDetailsViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+
+    func configureRefreshControl () {
+       // Add the refresh control to your UIScrollView object.
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.tintColor = .red
+        self.refreshControl?.addTarget(self, action:
+                                          #selector(refreshList),
+                                          for: .valueChanged)
+        guard let refreshControl = self.refreshControl else { return }
+        self.tableView.addSubview(refreshControl)
+    }
+    
+    @objc func refreshList(){
+        tableView.reloadData()
+        refreshControl?.endRefreshing()
+    }
+        
+    
 }
 
 private extension ShowDetailsViewController {
@@ -126,7 +146,7 @@ protocol ReviewAddedDelegate: AnyObject {
 
 extension ShowDetailsViewController: ReviewAddedDelegate {
     func didAddReview(review: Review) {
-        reviews.append(review)
+        reviews.insert(review, at: 0)
         tableView.reloadData()
     }
 }

@@ -3,7 +3,6 @@
 //  TV Shows
 //
 //  Created by Infinum on 20.07.2021..
-//
 
 import UIKit
 import SVProgressHUD
@@ -21,12 +20,14 @@ class HomeViewController: UIViewController{
     var userResponse: UserResponse!
     var authInfo: AuthInfo!
     private var shows: [Show] = []
+    private var limit = 20
+    private var totalEntries = 100
     
     // MARK: - Lifecycle methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        showListsRequest()
+        showListsRequest(page: "1",items: "20")
         setupTableView()
         
         let profileDetailsItem = UIBarButtonItem(
@@ -52,12 +53,12 @@ class HomeViewController: UIViewController{
     // MARK:  - Private functions
 
 private extension HomeViewController {
-    func showListsRequest() {
+    func showListsRequest(page: String, items: String) {
        AF
         .request(
              "https://tv-shows.infinum.academy/shows",
              method: .get,
-             parameters: ["page": "1", "items": "100"], // pagination arguments
+             parameters: ["page": page, "items": items], // pagination arguments
         headers: HTTPHeaders(self.authInfo.headers)
          )
          .validate()
@@ -65,8 +66,8 @@ private extension HomeViewController {
             guard let self = self else { return }
             switch response.result {
             case .success(let showsResponse):
-                self.shows = showsResponse.shows
-                self.tableView.reloadData()
+                self.shows.append(contentsOf: showsResponse.shows)
+                self.tableView.reloadData() //ovo mozda ne ide tu
                 SVProgressHUD.showSuccess(withStatus: "Success")
                 SVProgressHUD.dismiss()
             case .failure(let error):
@@ -87,9 +88,20 @@ extension HomeViewController: UITableViewDataSource {
             withIdentifier: "TVShowTableViewCell",
             for: indexPath
         ) as! TVShowTableViewCell
-        
         cell.configure(with: shows[indexPath.row])
         return cell
+    }
+    
+    // adding new shows
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == shows.count - 1 {
+            // we are at the last cell, load more content
+            if shows.count < totalEntries {
+                // provjeri jos
+                showListsRequest(page: String(indexPath.row), items: "20")
+                self.perform(#selector(loadTable), with: nil, afterDelay: 1.0)
+            }
+        }
     }
 }
 
@@ -126,10 +138,16 @@ private extension HomeViewController {
         present(navigationController, animated: true)
     }
     
-    @objc func onDidLogout(_ notification: Notification) {
+    @objc
+    func onDidLogout(_ notification: Notification) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "ViewController_Login")
         navigationController?.setViewControllers([viewControllerLogin], animated: true)
+    }
+    
+    @objc
+    func loadTable(){
+        self.tableView.reloadData()
     }
 }
 

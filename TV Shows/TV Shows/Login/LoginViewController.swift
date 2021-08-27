@@ -8,6 +8,7 @@
 import UIKit
 import SVProgressHUD
 import Alamofire
+import Locksmith
 
 class LoginViewController: UIViewController {
         
@@ -116,6 +117,7 @@ private extension LoginViewController {
 private extension LoginViewController {
     
     func loginRegisterRequest(parameters: [String: String], code: String) {
+        
         AF
             .request(
                 "https://tv-shows.infinum.academy/\(code)",
@@ -132,13 +134,13 @@ private extension LoginViewController {
                     let headers = response.response?.headers.dictionary ?? [:]
                     self.handleSuccesfulLogin(for: userResponse.user, headers: headers)
                     SVProgressHUD.dismiss()
-                    
+
                     let storyboard = UIStoryboard(name: "Home", bundle: nil)
                     let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "ViewController_Home")
                     guard let vc = viewControllerHome as? HomeViewController else { return }
                     vc.authInfo = self.authInfo
                     vc.userResponse = self.userResponse
-                        
+
                     if self.rememberMe {
                         self.saveAuthInfoToUserDefaults()
                     }

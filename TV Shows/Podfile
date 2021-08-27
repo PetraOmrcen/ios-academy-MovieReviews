@@ -9,5 +9,6 @@ target 'TV Shows' do
   pod "SVProgressHUD"
   pod "Alamofire"
   pod "Kingfisher"
+  pod "Locksmith"
 end
 
